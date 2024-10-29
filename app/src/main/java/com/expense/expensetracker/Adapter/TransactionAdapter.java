@@ -2,6 +2,8 @@ package com.expense.expensetracker.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -24,7 +27,7 @@ import java.util.Locale;
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder> {
 
     private final Context context;
-    private final ArrayList<Transaction> transactions;
+    private  ArrayList<Transaction> transactions;
 
     public TransactionAdapter(Context context, ArrayList<Transaction> transactions) {
         this.context = context;
@@ -61,42 +64,59 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         switch (transcation.getCategory()) {
             case "Food":
+                setBackgroundColor(holder.transactionImage, R.color.food);
                 Glide.with(context).load(R.drawable.menu_24).into(holder.transactionImage);
                 break;
             case "Electronics":
-                Glide.with(context)
-                        .load(R.drawable.electronics_24)
-                        .into(holder.transactionImage);
+                setBackgroundColor(holder.transactionImage, R.color.electronics);
+                Glide.with(context).load(R.drawable.electronics_24).into(holder.transactionImage);
                 break;
             case "Travel":
-                Glide.with(context).load(R.drawable.travel_24)
-                        .into(holder.transactionImage);
+                setBackgroundColor(holder.transactionImage, R.color.travel);
+                Glide.with(context).load(R.drawable.travel_24).into(holder.transactionImage);
                 break;
+            case "Clothes":
+                setBackgroundColor(holder.transactionImage, R.color.clothes);
+                Glide.with(context).load(R.drawable.clothes_24).into(holder.transactionImage);
+                        break;
             case "House Hold":
+                setBackgroundColor(holder.transactionImage, R.color.house);
                 Glide.with(context).load(R.drawable.house_24).into(holder.transactionImage);
                 break;
             case "Education":
+                setBackgroundColor(holder.transactionImage, R.color.education);
                 Glide.with(context).load(R.drawable.education_24).into(holder.transactionImage);
                 break;
             case "Rent":
+                setBackgroundColor(holder.transactionImage, R.color.rent);
                 Glide.with(context).load(R.drawable.rents_24).into(holder.transactionImage);
                 break;
             case "Vehicle Gas":
+                setBackgroundColor(holder.transactionImage, R.color.vehicle);
                 Glide.with(context).load(R.drawable.gas_24).into(holder.transactionImage);
                 break;
             case "Electricity Bill":
+                setBackgroundColor(holder.transactionImage, R.color.electricity);
                 Glide.with(context).load(R.drawable.electric_bill_24).into(holder.transactionImage);
                 break;
+            case "Sports":
+                setBackgroundColor(holder.transactionImage, R.color.sports);
+                Glide.with(context).load(R.drawable.sports_24).into(holder.transactionImage);
+                break;
             case "Gas Bill":
+                setBackgroundColor(holder.transactionImage, R.color.gas);
                 Glide.with(context).load(R.drawable.gas_meter_24).into(holder.transactionImage);
                 break;
             case "Subscription":
+                setBackgroundColor(holder.transactionImage, R.color.subscription);
                 Glide.with(context).load(R.drawable.subscriptions_24).into(holder.transactionImage);
                 break;
             case "Pay to Someone":
+                setBackgroundColor(holder.transactionImage, R.color.pay);
                 Glide.with(context).load(R.drawable.payment_24).into(holder.transactionImage);
                 break;
             case "Others":
+                setBackgroundColor(holder.transactionImage, R.color.others);
                 Glide.with(context).load(R.drawable.others_24).into(holder.transactionImage);
                 break;
         }
@@ -142,5 +162,19 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         this.transactions.clear();   // Assuming transactionList is the list used in the adapter
         this.transactions.addAll(newTransactions);
         notifyDataSetChanged();  // Notify the adapter of data changes
+    }
+
+    public void updateTransactionList(ArrayList<Transaction> filterList){
+        this.transactions = filterList;
+        notifyDataSetChanged();
+    }
+
+    // Method to set background color
+    private void setBackgroundColor(ImageView imageView, int colorResId) {
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setColor(ContextCompat.getColor(imageView.getContext(), colorResId));
+        drawable.setShape(GradientDrawable.RECTANGLE);
+        drawable.setCornerRadius(10 * imageView.getContext().getResources().getDisplayMetrics().density); // Convert dp to pixels
+        imageView.setBackground(drawable);
     }
 }

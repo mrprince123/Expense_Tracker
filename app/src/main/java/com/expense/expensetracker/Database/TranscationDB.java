@@ -124,6 +124,39 @@ public class TranscationDB extends SQLiteOpenHelper {
         return transactions;
     }
 
+    public ArrayList<Transaction> getLatestTransactions(){
+        ArrayList<Transaction> transactions = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM " + TABLE_TRANSACTION +  " ORDER BY " + COLUMN_TIMESTAMP + " DESC LIMIT 10";
+
+        Cursor cursor  = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                long id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
+                String title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE));
+                String date = cursor.getString(cursor.getColumnIndex(COLUMN_DATE));
+                double amount = cursor.getDouble(cursor.getColumnIndex(COLUMN_AMOUNT));
+                String category = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY));
+                String paymentMethod = cursor.getString(cursor.getColumnIndex(COLUMN_PAYMENT_METHOD));
+                String location = cursor.getString(cursor.getColumnIndex(COLUMN_LOCATION));
+                String receipt = cursor.getString(cursor.getColumnIndex(COLUMN_RECEIPT));
+                String notes = cursor.getString(cursor.getColumnIndex(COLUMN_NOTES));
+                String timestamp = cursor.getString(cursor.getColumnIndex(COLUMN_TIMESTAMP));
+
+                // Create a Transaction object and add it to the list
+                transactions.add(new Transaction(id, title, date, amount, category, paymentMethod, location, receipt, notes, timestamp));
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close(); // Close the database connection
+        return transactions;
+
+    }
+
+
     public void deleteTransactionById(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_TRANSACTION, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});

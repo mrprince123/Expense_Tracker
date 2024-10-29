@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +31,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
     @NonNull
     @Override
     public ExpenseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_expense, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_transaction, parent, false);
         return new ExpenseViewHolder(view);
     }
 
@@ -38,8 +39,8 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
     public void onBindViewHolder(@NonNull ExpenseViewHolder holder, int position) {
         Expense expense = expenses.get(position);
         holder.messageTextView.setText(expense.getMessageTitle());
-        holder.amountTextView.setText("$" + String.valueOf(expense.getAmount()));
-        holder.dateTextView.setText("Date : " + expense.getFormattedDate());
+        holder.amountTextView.setText("₹" + String.valueOf(expense.getAmount()));
+        holder.dateTextView.setText(expense.getFormattedDate());
 
         holder.expenseDetailButton.setOnClickListener(view -> {
 
@@ -73,14 +74,14 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
         TextView messageTextView;
         TextView amountTextView;
         TextView dateTextView;
-        Button expenseDetailButton;
+        LinearLayout expenseDetailButton;
 
         public ExpenseViewHolder(@NonNull View itemView) {
             super(itemView);
-            messageTextView = itemView.findViewById(R.id.expense_title_expense);
-            amountTextView = itemView.findViewById(R.id.expense_amount_expense);
-            dateTextView = itemView.findViewById(R.id.expense_date_expense);
-            expenseDetailButton = itemView.findViewById(R.id.expense_details_button);
+            messageTextView = itemView.findViewById(R.id.transaction_name);
+            amountTextView = itemView.findViewById(R.id.transaction_desc);
+            dateTextView = itemView.findViewById(R.id.transaction_time);
+            expenseDetailButton = itemView.findViewById(R.id.full_expense_message);
         }
     }
 }

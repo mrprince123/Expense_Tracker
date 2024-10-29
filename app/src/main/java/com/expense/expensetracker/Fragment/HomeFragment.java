@@ -1,7 +1,10 @@
 package com.expense.expensetracker.Fragment;
 
+
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -26,11 +29,18 @@ import com.expense.expensetracker.Adapter.TransactionAdapter;
 import com.expense.expensetracker.Database.TranscationDB;
 import com.expense.expensetracker.Models.Transaction;
 import com.expense.expensetracker.R;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
@@ -47,47 +57,58 @@ public class HomeFragment extends Fragment {
     TextView totalIncomeBalance;
     ImageView settingButton;
 
+    PieChart pieChart;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        // Get all the Recent Transactions
+        dbHelper = new TranscationDB(getContext());
+
+        // Get the Pie Chart View and set the Value by calling the function
+        pieChart  = view.findViewById(R.id.monthly_chart);
+        getMonthlyReport();
+
+
+        // Add the New Transaction Button
         addTransactionButton = view.findViewById(R.id.add_transaction);
         addTransactionButton.setOnClickListener(view1 -> {
             addTransaction();
         });
 
+        // Edit the Income Balance
         editIncomeBalance = view.findViewById(R.id.edit_income_balance);
         editIncomeBalance.setOnClickListener(view1 -> setIncomeBalance());
 
-        dbHelper = new TranscationDB(getContext());
-
-        recyclerView = view.findViewById(R.id.recent_transaction);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-
-        transcationArrayList = dbHelper.getAllTransactions();
-        if (transcationArrayList == null) {
-            transcationArrayList = new ArrayList<>();
-        }
-
-        transactionAdapter = new TransactionAdapter(getContext(), transcationArrayList);
-        recyclerView.setAdapter(transactionAdapter);
-
+        // Total Amount After Addition
         double totalAmount = dbHelper.getTotalAmount();
-
         TextView totalExpendature = view.findViewById(R.id.total_expendature);
-        // Set the total amount as a formatted string in the TextView
         totalExpendature.setText(String.format("%.2f", totalAmount));
 
+        // Set Total Income Amount
         double totalIncome = dbHelper.getIncomeBalance();
         totalIncomeBalance = view.findViewById(R.id.total_income_balance);
         totalIncomeBalance.setText(String.format("%.2f", totalIncome));
 
-
-
+        // Navigate to the Setting Page
         settingButton = view.findViewById(R.id.settings_button);
         settingButton.setOnClickListener(view1 -> {
             startActivity(new Intent(getContext(), SettingActivity.class));
         });
+
+
+        recyclerView = view.findViewById(R.id.recent_transaction);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+
+            transcationArrayList = dbHelper.getLatestTransactions();
+            if (transcationArrayList == null) {
+                transcationArrayList = new ArrayList<>();
+            }
+
+        transactionAdapter = new TransactionAdapter(getContext(), transcationArrayList);
+        recyclerView.setAdapter(transactionAdapter);
 
         return view;
     }
@@ -105,7 +126,7 @@ public class HomeFragment extends Fragment {
         inputReceiptButton.setOnClickListener(view -> openImagePicker());
 
         // Prepare the adapter for the AutoCompleteTextView
-        String[] categoryItem = new String[]{"Food", "Electronics", "Travel", "House Hold", "Education", "Rent", "Vehicle Gas", "Electricity Bill", "Gas Bill", "Subscription", "Pay to Someone", "Others"};
+        String[] categoryItem = new String[]{"Food", "Electronics", "Travel", "Clothes", "House Hold", "Education", "Rent", "Vehicle Gas", "Electricity Bill", "Sports", "Gas Bill", "Subscription", "Pay to Someone", "Others"};
         AutoCompleteTextView transactionCategory = dialogView.findViewById(R.id.transaction_category);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.dropdown_item, categoryItem);
         transactionCategory.setAdapter(adapter);
@@ -191,7 +212,6 @@ public class HomeFragment extends Fragment {
                     Toast.makeText(getContext(), "Failed to load image", Toast.LENGTH_SHORT).show();
                 }
             }
-//            Toast.makeText(getContext(), "Image selected: " + receiptUri.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -233,4 +253,55 @@ public class HomeFragment extends Fragment {
         builder.show();
     }
 
+    private void getMonthlyReport() {
+        ArrayList<Transaction> transactions = dbHelper.getAllTransactions();
+        HashMap<String, Integer> categoryCount = new HashMap<>();
+        int totalTransactions = transactions.size();
+
+        // Count the number of occurrences of each category
+        for (Transaction transaction : transactions) {
+            String category = transaction.getCategory();
+            categoryCount.put(category, categoryCount.getOrDefault(category, 0) + 1);
+        }
+
+        // Prepare data for the pie chart, converting counts to percentages
+        List<PieEntry> entries = new ArrayList<>();
+        for (String category : categoryCount.keySet()) {
+            // Calculate percentage based on the occurrence count
+            double percentage = ((double) categoryCount.get(category) / totalTransactions) * 100;
+            entries.add(new PieEntry((float) percentage, category)); // Add percentage to PieEntry
+        }
+
+        // Create a PieDataSet and assign unique colors
+        PieDataSet dataSet = new PieDataSet(entries, "Categories");
+
+        // Generate unique colors for each category
+        ArrayList<Integer> colors = new ArrayList<>();
+        for (int i = 0; i < entries.size(); i++) {
+            colors.add(ColorTemplate.COLORFUL_COLORS[i % ColorTemplate.COLORFUL_COLORS.length]);
+        }
+        dataSet.setColors(colors);
+        dataSet.setSliceSpace(4f);
+
+        pieChart.setDrawEntryLabels(false);
+        pieChart.setUsePercentValues(true);
+        pieChart.getDescription().setEnabled(false);
+
+        PieData pieData = new PieData(dataSet);
+        pieData.setValueTextSize(12f);
+        pieData.setValueTypeface(Typeface.DEFAULT_BOLD);
+        pieData.setValueTextColor(Color.WHITE);
+        pieChart.setData(pieData);
+        pieChart.setCenterText("Categories");
+        pieChart.setCenterTextSize(15f);
+        pieChart.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
+        pieChart.invalidate(); // Refresh the chart
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        dbHelper.close(); // Ensure the database is closed when the fragment is destroyed
+    }
 }

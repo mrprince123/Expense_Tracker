@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -205,8 +204,8 @@ public class ExpenseFragment extends Fragment {
                 cursor.close();
                 adapter.notifyDataSetChanged();
 
-                totalDebitAmount.setText("Total UPI: ₹" + String.format("%.2f", totalUPIAmount));
-                totalCreditAmount.setText("Total Card: ₹" + String.format("%.2f", totalCardAmount));
+                totalDebitAmount.setText("₹" + String.format("%.2f", totalUPIAmount));
+                totalCreditAmount.setText("₹" + String.format("%.2f", totalCardAmount));
             } else {
                 Toast.makeText(getContext(), "No transaction SMS found", Toast.LENGTH_SHORT).show();
             }

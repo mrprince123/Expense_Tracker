@@ -9,15 +9,16 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#e9ecef</color>
-    <color name="grayText">#6c757d</color>
+    <color name="grayText">#adb5bd</color>
 
-<!--    Custom Color -->
-    <color name="backgroundColor">#f5f3f4</color>
-    <color name="textColor">#000000</color>
-    <color name="forgroundColor">#FFFFFF</color>
-    <color name="bottomBar">#FFFBE6</color>
+    <!--    Custom Color -->
+    <color name="backgroundColor">#191A25</color>
+    <color name="textColor">#FFFFFF</color>
+    <color name="forgroundColor">#292A36</color>
+    <color name="bottomBar">#292A36</color>
 
-<!--    All the Category 14 Color -->
+
+    <!--    All the Category 14 Color -->
     <color name="food">#fb6f92</color>
     <color name="electronics">#1e96fc</color>
     <color name="travel">#38b000</color>

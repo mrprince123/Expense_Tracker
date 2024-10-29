@@ -1,5 +1,7 @@
 package com.expense.expensetracker.Fragment;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
@@ -72,7 +75,6 @@ public class ReportsFragment extends Fragment {
         dateAutoComplete.setOnItemClickListener((parent, view1, position, id) -> {
             String DateValue = dateAutoComplete.getText().toString();
 
-            // Generate the report based on selected date range
             generateReportByCategory(DateValue);
             generateReportByAmount(DateValue);
             generateReportByLocation(DateValue);
@@ -92,8 +94,6 @@ public class ReportsFragment extends Fragment {
         // Count the number of occurrences of each category
         for (Transaction transaction : transactions) {
             String category = transaction.getCategory();
-
-            // Count how many times each category occurs
             categoryCount.put(category, categoryCount.getOrDefault(category, 0) + 1);
         }
 
@@ -114,11 +114,20 @@ public class ReportsFragment extends Fragment {
             colors.add(ColorTemplate.COLORFUL_COLORS[i % ColorTemplate.COLORFUL_COLORS.length]);
         }
         dataSet.setColors(colors);
+        dataSet.setSliceSpace(4f);
+
+        pieChart.setDrawEntryLabels(false);
+        pieChart.setUsePercentValues(true);
+        pieChart.getDescription().setEnabled(false);
 
         PieData pieData = new PieData(dataSet);
-
-        // Set the data to the chart
+        pieData.setValueTextSize(12f);
+        pieData.setValueTypeface(Typeface.DEFAULT_BOLD);
+        pieData.setValueTextColor(Color.WHITE);
         pieChart.setData(pieData);
+        pieChart.setCenterText("Categories");
+        pieChart.setCenterTextSize(15f);
+        pieChart.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
         pieChart.invalidate(); // Refresh the chart
     }
 
@@ -131,8 +140,6 @@ public class ReportsFragment extends Fragment {
         for (Transaction transaction : transactions) {
             String date = transaction.getDate();
             double amount = transaction.getAmount();
-
-            // Sum up the amounts for each date
             dateTotals.put(date, dateTotals.getOrDefault(date, 0.0) + amount);
         }
 
@@ -161,13 +168,17 @@ public class ReportsFragment extends Fragment {
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
-                // Get the date from the dateTotals key set
                 return new ArrayList<>(dateTotals.keySet()).get((int) value);
             }
         });
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1f); // Display one label per entry
         xAxis.setDrawGridLines(false);
+
+        // Enable Horizontal Scrolling
+        amountBarChart.setDragEnabled(true);
+        amountBarChart.setScaleEnabled(true);
+        amountBarChart.setVisibleXRangeMaximum(5);
 
         // Additional styling
         amountBarChart.getAxisLeft().setDrawGridLines(false);
@@ -209,12 +220,23 @@ public class ReportsFragment extends Fragment {
             colors.add(ColorTemplate.COLORFUL_COLORS[i % ColorTemplate.COLORFUL_COLORS.length]);
         }
         dataSet.setColors(colors);
+        dataSet.setSliceSpace(5f);
 
         PieData pieData = new PieData(dataSet);
 
+        paymentMethodChart.setDrawEntryLabels(false);
+        paymentMethodChart.setUsePercentValues(true);
+        paymentMethodChart.getDescription().setEnabled(false);
+
         // Set the data to the chart
+        pieData.setValueTextSize(12f);
+        pieData.setValueTypeface(Typeface.DEFAULT_BOLD);
+        pieData.setValueTextColor(Color.WHITE);
         paymentMethodChart.setData(pieData);
-        paymentMethodChart.invalidate(); // Refresh the chart
+        paymentMethodChart.setCenterText("Payment Methods");
+        paymentMethodChart.setCenterTextSize(15f);
+        paymentMethodChart.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
+        paymentMethodChart.invalidate();
     }
 
     private void generateReportByLocation(String dateRange) {
@@ -277,8 +299,6 @@ public class ReportsFragment extends Fragment {
         // Refresh the chart
         locationChart.invalidate();
     }
-
-
 
 
     private ArrayList<Transaction> filterTransactionsByDateRange(ArrayList<Transaction> transactions, String dateRange) {

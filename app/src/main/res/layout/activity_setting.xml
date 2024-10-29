@@ -18,6 +18,7 @@
             android:padding="10dp">
 
             <ImageView
+                android:id="@+id/back_button_setting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -45,14 +46,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
+                android:layout_gravity="center"
                 android:src="@drawable/app_24" />
 
             <TextView
+                android:id="@+id/about_this_app"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="About this App" />
+                android:text="About this App"
+                android:textColor="@color/textColor" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -78,6 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
+                android:layout_gravity="center"
                 android:src="@drawable/dark_24" />
 
             <TextView
@@ -85,10 +90,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="Theme Change" />
+                android:text="Theme Change"
+                android:textColor="@color/textColor" />
 
 
-            <Switch
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/change_theme_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -110,6 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
+                android:layout_gravity="center"
                 android:src="@drawable/groups_24" />
 
             <TextView
@@ -117,7 +125,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="About Us" />
+                android:text="About Us"
+
+                android:textColor="@color/textColor" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -142,6 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
+                android:layout_gravity="center"
                 android:src="@drawable/mail_24" />
 
             <TextView
@@ -149,7 +160,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="Contact Us" />
+                android:text="Contact Us"
+
+                android:textColor="@color/textColor" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -173,6 +186,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_margin="20dp"
                 android:src="@drawable/lock_24" />
 
@@ -181,7 +195,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="Privacy Policy" />
+                android:text="Privacy Policy"
+
+                android:textColor="@color/textColor" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -207,6 +223,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
+                android:layout_gravity="center"
                 android:src="@drawable/star_24" />
 
             <TextView
@@ -214,7 +231,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="Rate this App" />
+                android:text="Rate this App"
+
+                android:textColor="@color/textColor" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -235,10 +254,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Social"
-                android:textSize="16dp"
                 android:layout_margin="20dp"
-                android:textStyle="bold"/>
+                android:text="Social"
+                android:textColor="@color/textColor"
+                android:textSize="16dp"
+
+                android:textStyle="bold" />
 
 
             <LinearLayout
@@ -258,7 +279,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:text="LinkedIn" />
+                    android:text="LinkedIn"
+
+                    android:textColor="@color/textColor" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -291,7 +314,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:text="Twitter" />
+                    android:text="Twitter"
+
+                    android:textColor="@color/textColor" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -324,7 +349,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:text="Github" />
+
+                    android:text="Github"
+                    android:textColor="@color/textColor" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -357,7 +384,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:text="Youtube" />
+                    android:text="Youtube"
+
+                    android:textColor="@color/textColor" />
 
                 <ImageView
                     android:layout_width="wrap_content"

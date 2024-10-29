@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
     android:background="@drawable/round_white"
+    android:backgroundTint="@color/forgroundColor"
     android:orientation="horizontal"
     android:padding="10dp">
 
@@ -28,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Groceries"
-            android:textColor="@color/black"
+            android:textColor="@color/textColor"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -36,6 +37,7 @@
             android:id="@+id/expense_date_expense"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/grayText"
             android:text="Walmart" />
 
         <LinearLayout

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     tools:context=".Fragment.ReportsFragment">
 
     <LinearLayout
@@ -18,8 +19,8 @@
             android:padding="16dp"
             android:text="Expense Report"
             android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textColor="@color/textColor"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
 
@@ -39,7 +40,8 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:inputType="none"
-                android:text="Date Range" />
+                android:text="Date Range"
+                android:textColor="@color/textColor" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -51,11 +53,12 @@
             android:layout_marginEnd="20dp"
             android:padding="10dp"
             app:cardCornerRadius="10dp"
-            app:cardElevation="2dp">
+            app:cardElevation="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/forgroundColor"
                 android:orientation="vertical">
 
                 <TextView
@@ -63,6 +66,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="By Categories"
+                    android:textColor="@color/textColor"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <com.github.mikephil.charting.charts.PieChart
@@ -84,11 +89,12 @@
             android:layout_marginEnd="20dp"
             android:padding="10dp"
             app:cardCornerRadius="10dp"
-            app:cardElevation="2dp">
+            app:cardElevation="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/forgroundColor"
                 android:orientation="vertical">
 
                 <TextView
@@ -96,6 +102,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="By Amount"
+                    android:textColor="@color/textColor"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <com.github.mikephil.charting.charts.BarChart
@@ -117,11 +125,12 @@
             android:layout_marginEnd="20dp"
             android:padding="10dp"
             app:cardCornerRadius="10dp"
-            app:cardElevation="2dp">
+            app:cardElevation="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/forgroundColor"
                 android:orientation="vertical">
 
                 <TextView
@@ -129,6 +138,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="By Payment Method"
+                    android:textColor="@color/textColor"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <com.github.mikephil.charting.charts.PieChart
@@ -149,11 +160,12 @@
             android:layout_marginEnd="20dp"
             android:padding="10dp"
             app:cardCornerRadius="10dp"
-            app:cardElevation="2dp">
+            app:cardElevation="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/forgroundColor"
                 android:orientation="vertical">
 
                 <TextView
@@ -161,6 +173,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="By Location"
+                    android:textColor="@color/textColor"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <com.github.mikephil.charting.charts.BarChart

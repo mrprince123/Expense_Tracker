@@ -12,6 +12,12 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/navigation_transaction"
+        android:name="com.expense.expensetracker.Fragment.TransactionFragment"
+        android:label="@string/title_transaction"
+        tools:layout="@layout/fragment_transaction"/>
+
+    <fragment
         android:id="@+id/navigation_expense"
         android:name="com.expense.expensetracker.Fragment.ExpenseFragment"
         android:label="@string/title_expense"
@@ -22,4 +28,5 @@
         android:name="com.expense.expensetracker.Fragment.ReportsFragment"
         android:label="@string/title_report"
         tools:layout="@layout/fragment_reports" />
+
 </navigation>
