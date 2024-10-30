@@ -192,7 +192,6 @@ public class ExpenseFragment extends Fragment {
                             Expense expense = new Expense(address, body, amount, date);
                             if (address.contains("SBICRD")) {
                                 totalCardAmount += amount;
-
                             } else if (address.contains("SBIUPI")) {
                                 totalUPIAmount += amount;
                             }
@@ -204,8 +203,8 @@ public class ExpenseFragment extends Fragment {
                 cursor.close();
                 adapter.notifyDataSetChanged();
 
-                totalDebitAmount.setText("₹" + String.format("%.2f", totalUPIAmount));
-                totalCreditAmount.setText("₹" + String.format("%.2f", totalCardAmount));
+                totalDebitAmount.setText("₹ " + String.format("%.2f", totalUPIAmount));
+                totalCreditAmount.setText("₹ " + String.format("%.2f", totalCardAmount));
             } else {
                 Toast.makeText(getContext(), "No transaction SMS found", Toast.LENGTH_SHORT).show();
             }
@@ -220,13 +219,28 @@ public class ExpenseFragment extends Fragment {
         return lowerCaseAddress.contains("sbiupi") || lowerCaseAddress.contains("sbicrd") || lowerCaseAddress.contains("juspay");
     }
 
+    // Extract Amount from the Message Body
     private double extractAmountFromSms(String smsBody) {
-        String regex = "₹?(\\d+(?:,\\d{3})*(?:\\.\\d{1,2})?)";
+        String regex = "(?i)(?:(?:RS|INR|MRP)\\.?\\s?)(\\d+(:?\\,\\d+)?(\\,\\d+)?(\\.\\d{1,2})?)";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(smsBody);
         if (matcher.find()) {
             return Double.parseDouble(matcher.group(1).replace(",", ""));
         }
         return 0.0;
+    }
+
+    // Extract Merchant Name from the SMS
+    private String extractMerchantNameFromSMS(){
+        String regex = "(?i)(?:\\sat\\s|in\\*)([A-Za-z0-9]*\\s?-?\\s?[A-Za-z0-9]*\\s?-?\\.?)";
+
+        return null;
+    }
+
+    // Find out the card name (debit/Credit Card)from the bank transaction messages
+    private String extractCardNameFromSMS(){
+        String regex = "(?i)(?:\\smade on|ur|made a\\s|in\\*)([A-Za-z]*\\s?-?\\s[A-Za-z]*\\s?-?\\s[A-Za-z]*\\s?-?)";
+
+        return null;
     }
 }

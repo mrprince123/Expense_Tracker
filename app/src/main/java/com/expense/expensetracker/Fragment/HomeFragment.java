@@ -1,6 +1,5 @@
 package com.expense.expensetracker.Fragment;
 
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -100,7 +99,6 @@ public class HomeFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recent_transaction);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-
 
             transcationArrayList = dbHelper.getLatestTransactions();
             if (transcationArrayList == null) {

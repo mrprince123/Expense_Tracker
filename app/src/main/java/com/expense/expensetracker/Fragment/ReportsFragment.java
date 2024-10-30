@@ -39,11 +39,9 @@ import java.util.Locale;
 
 public class ReportsFragment extends Fragment {
 
-
     private PieChart pieChart, paymentMethodChart;
     private BarChart amountBarChart, locationChart;
     private TranscationDB dbHelper;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,8 +77,6 @@ public class ReportsFragment extends Fragment {
             generateReportByAmount(DateValue);
             generateReportByLocation(DateValue);
             generateReportByPaymentMethod(DateValue);
-
-            Toast.makeText(getContext(), "Date: " + DateValue, Toast.LENGTH_SHORT).show();
         });
 
         return view;
@@ -100,9 +96,8 @@ public class ReportsFragment extends Fragment {
         // Prepare data for the pie chart, converting counts to percentages
         List<PieEntry> entries = new ArrayList<>();
         for (String category : categoryCount.keySet()) {
-            // Calculate percentage based on the occurrence count
             double percentage = ((double) categoryCount.get(category) / totalTransactions) * 100;
-            entries.add(new PieEntry((float) percentage, category)); // Add percentage to PieEntry
+            entries.add(new PieEntry((float) percentage, category));
         }
 
         // Create a PieDataSet and assign unique colors
@@ -300,7 +295,6 @@ public class ReportsFragment extends Fragment {
         locationChart.invalidate();
     }
 
-
     private ArrayList<Transaction> filterTransactionsByDateRange(ArrayList<Transaction> transactions, String dateRange) {
         ArrayList<Transaction> filteredTransactions = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
@@ -351,5 +345,4 @@ public class ReportsFragment extends Fragment {
         return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
                 cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
     }
-
 }
