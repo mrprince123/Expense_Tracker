@@ -3,13 +3,15 @@ package com.expense.expensetracker.Fragment;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.expense.expensetracker.Database.TranscationDB;
 import com.expense.expensetracker.Models.Transaction;
@@ -24,24 +26,22 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 public class ReportsFragment extends Fragment {
 
     private PieChart pieChart, paymentMethodChart;
     private BarChart amountBarChart, locationChart;
     private TranscationDB dbHelper;
+    private TextView dateRangeText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,30 +56,53 @@ public class ReportsFragment extends Fragment {
         paymentMethodChart = view.findViewById(R.id.chart_payment_method);
         amountBarChart = view.findViewById(R.id.bar_chart_amount);
 
-
-        String[] dateRange = new String[]{"Today", "Last 7 Days", "Last 30 Days"};
-        AutoCompleteTextView dateAutoComplete = view.findViewById(R.id.date_picker_range);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.dropdown_item, dateRange);
-        dateAutoComplete.setAdapter(adapter);
-        dateAutoComplete.setThreshold(1);
-
-        // Generate the report based on the default selection
-        generateReportByCategory("Last 7 Days");
-        generateReportByAmount("Last 7 Days");
-        generateReportByLocation("Last 7 Days");
-        generateReportByPaymentMethod("Last 7 Days");
-
-        // Set item click listener to capture selected date range
-        dateAutoComplete.setOnItemClickListener((parent, view1, position, id) -> {
-            String DateValue = dateAutoComplete.getText().toString();
-
-            generateReportByCategory(DateValue);
-            generateReportByAmount(DateValue);
-            generateReportByLocation(DateValue);
-            generateReportByPaymentMethod(DateValue);
+        dateRangeText = view.findViewById(R.id.date_range_report);
+        dateRangeText.setOnClickListener(view1 -> {
+            setupDateDropdown();
         });
 
+//         Generate the report based on the default selection
+        generateReports("Last 7 Days");
+
         return view;
+    }
+
+    private void setupDateDropdown() {
+        String[] dateRange = {"Today", "Last 7 Days", "Last 30 Days"};
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
+        bottomSheetDialog.setContentView(R.layout.date_range_container);
+        LinearLayout dateRangeContainer = bottomSheetDialog.findViewById(R.id.dateRangeContainer);
+
+        if (dateRangeContainer != null) {
+            for (String range : dateRange) {
+                View itemView = LayoutInflater.from(getContext()).inflate(R.layout.date_range, dateRangeContainer, false);
+                CheckBox checkBox = itemView.findViewById(R.id.checkbox);
+                TextView dateTextView = itemView.findViewById(R.id.date_range_value);
+                dateTextView.setText(range);
+
+                final String selectedRange = range;
+
+                // Handle checkbox selection
+                checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    if (isChecked) {
+                        Toast.makeText(getContext(), "Range " + selectedRange, Toast.LENGTH_SHORT).show();
+                        generateReports(selectedRange);
+                        bottomSheetDialog.dismiss();
+                    }
+                });
+                // Add each item view to the container
+                dateRangeContainer.addView(itemView);
+            }
+        }
+        bottomSheetDialog.show();
+    }
+
+
+    private void generateReports(String dateRange) {
+        generateReportByCategory(dateRange);
+        generateReportByAmount(dateRange);
+        generateReportByLocation(dateRange);
+        generateReportByPaymentMethod(dateRange);
     }
 
     private void generateReportByCategory(String dateRange) {
@@ -141,6 +164,15 @@ public class ReportsFragment extends Fragment {
         // Prepare data for the bar chart
         List<BarEntry> entries = new ArrayList<>();
         int index = 0;
+
+        // Check if there are any entries to avoid empty chart
+        if (dateTotals.isEmpty()) {
+            // Handle the case where no transactions are available
+            amountBarChart.clear(); // Clear any existing data
+            amountBarChart.invalidate(); // Refresh chart
+            return; // Early return to avoid proceeding with an empty dataset
+        }
+
         for (String date : dateTotals.keySet()) {
             // Add a BarEntry with the index and the total amount for that date
             entries.add(new BarEntry(index++, dateTotals.get(date).floatValue()));
@@ -163,9 +195,15 @@ public class ReportsFragment extends Fragment {
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
-                return new ArrayList<>(dateTotals.keySet()).get((int) value);
+                // Safeguard against out-of-bounds index
+                int index = (int) value;
+                if (index >= 0 && index < dateTotals.size()) {
+                    return new ArrayList<>(dateTotals.keySet()).get(index);
+                }
+                return ""; // Return empty string for out-of-bounds
             }
         });
+
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1f); // Display one label per entry
         xAxis.setDrawGridLines(false);
@@ -272,7 +310,7 @@ public class ReportsFragment extends Fragment {
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
                 if (value >= 1 && value < locationList.size()) {
-                    return locationList.get((int) value-1);
+                    return locationList.get((int) value - 1);
                 }
                 return "";
             }

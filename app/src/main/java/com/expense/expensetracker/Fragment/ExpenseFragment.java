@@ -6,6 +6,14 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -13,23 +21,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.expense.expensetracker.Adapter.ExpenseAdapter;
 import com.expense.expensetracker.Models.Expense;
 import com.expense.expensetracker.R;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.Calendar;
 
 public class ExpenseFragment extends Fragment {
 
@@ -40,7 +40,7 @@ public class ExpenseFragment extends Fragment {
     private ExpenseAdapter adapter;
     private double totalCardAmount = 0.0;
     private double totalUPIAmount = 0.0;
-    private AutoCompleteTextView dateAutoComplete;
+    private TextView dateRangePicker;
 
     private long dateRangeStartTimestamp = 0;
 
@@ -60,8 +60,10 @@ public class ExpenseFragment extends Fragment {
         smsListView.setAdapter(adapter);
 
 
-        dateAutoComplete = view.findViewById(R.id.date_range_expense);
-        setupDateDropdown();
+        dateRangePicker = view.findViewById(R.id.date_range_expense);
+        dateRangePicker.setOnClickListener(view1 -> {
+            setupDateDropdown();
+        });
 
         // Check and request SMS permission
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
@@ -73,25 +75,56 @@ public class ExpenseFragment extends Fragment {
         return view;
     }
 
-    private void setupDateDropdown() {
-        String[] dateRange = new String[]{"Today", "Last 7 Days", "Last 30 Days", "Last 90 Days", "Last 180 Days", "Last 365 Days", "All Time"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.dropdown_item, dateRange);
-        dateAutoComplete.setAdapter(adapter);
 
-        dateAutoComplete.setOnItemClickListener((parent, view1, position, id) -> {
-            switch (position) {
-                case 0: dateRangeStartTimestamp = getStartOfToday(); break;
-                case 1: dateRangeStartTimestamp = getStartOfLast7Days(); break;
-                case 2: dateRangeStartTimestamp = getStartOfLast30Days(); break;
-                case 3: dateRangeStartTimestamp = getStartOfLast90Days(); break;
-                case 4: dateRangeStartTimestamp = getStartOfLast180Days(); break;
-                case 5: dateRangeStartTimestamp = getStartOfLast365Days(); break;
-                case 6: dateRangeStartTimestamp = 0; break;
+    private void setupDateDropdown() {
+        // Define date range options
+        String[] dateRange = {"Today", "Last 7 Days", "Last 30 Days", "Last 90 Days", "Last 180 Days", "Last 365 Days", "All Time"};
+
+        // Create Bottom Sheet Dialog and set layout
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
+        bottomSheetDialog.setContentView(R.layout.date_range_container);
+
+        // Get the container in which we will add date options
+        LinearLayout dateRangeContainer = bottomSheetDialog.findViewById(R.id.dateRangeContainer);
+
+        if (dateRangeContainer != null) {
+            // Loop through each date range option
+            for (String range : dateRange) {
+                // Inflate each item view
+                View itemView = LayoutInflater.from(getContext()).inflate(R.layout.date_range, dateRangeContainer, false);
+
+                // Get the CheckBox and TextView from the layout
+                CheckBox checkBox = itemView.findViewById(R.id.checkbox);
+                TextView dateTextView = itemView.findViewById(R.id.date_range_value);
+
+                // Set the date range text
+                dateTextView.setText(range);
+
+                // Handle checkbox selection
+                checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    if (isChecked) {
+                        // Perform actions based on the selected date range
+                        switch (range) {
+                            case "Today": dateRangeStartTimestamp = getStartOfToday(); break;
+                            case "Last 7 Days": dateRangeStartTimestamp = getStartOfLast7Days(); break;
+                            case "Last 30 Days": dateRangeStartTimestamp = getStartOfLast30Days(); break;
+                            case "Last 90 Days": dateRangeStartTimestamp = getStartOfLast90Days(); break;
+                            case "Last 180 Days": dateRangeStartTimestamp = getStartOfLast180Days(); break;
+                            case "Last 365 Days": dateRangeStartTimestamp = getStartOfLast365Days(); break;
+                            case "All Time": dateRangeStartTimestamp = 0; break;
+                        }
+                        fetchSmsData(); // Re-fetch data with the updated range
+                        bottomSheetDialog.dismiss(); // Close the bottom sheet after selection
+                    }
+                });
+                // Add each item view to the container
+                dateRangeContainer.addView(itemView);
             }
-            fetchSmsData(); // Re-fetch data with the updated range
-            dateAutoComplete.clearFocus(); // Reset focus to ensure dropdown works again
-        });
+        }
+        // Show the Bottom Sheet Dialog
+        bottomSheetDialog.show();
     }
+
 
     private long getStartOfToday() {
         Calendar calendar = Calendar.getInstance();
@@ -231,14 +264,14 @@ public class ExpenseFragment extends Fragment {
     }
 
     // Extract Merchant Name from the SMS
-    private String extractMerchantNameFromSMS(){
+    private String extractMerchantNameFromSMS() {
         String regex = "(?i)(?:\\sat\\s|in\\*)([A-Za-z0-9]*\\s?-?\\s?[A-Za-z0-9]*\\s?-?\\.?)";
 
         return null;
     }
 
     // Find out the card name (debit/Credit Card)from the bank transaction messages
-    private String extractCardNameFromSMS(){
+    private String extractCardNameFromSMS() {
         String regex = "(?i)(?:\\smade on|ur|made a\\s|in\\*)([A-Za-z]*\\s?-?\\s[A-Za-z]*\\s?-?\\s[A-Za-z]*\\s?-?)";
 
         return null;

@@ -124,6 +124,8 @@ public class TranscationDB extends SQLiteOpenHelper {
         return transactions;
     }
 
+
+
     public ArrayList<Transaction> getLatestTransactions(){
         ArrayList<Transaction> transactions = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
