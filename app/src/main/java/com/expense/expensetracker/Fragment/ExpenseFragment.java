@@ -1,6 +1,7 @@
 package com.expense.expensetracker.Fragment;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,10 +23,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.expense.expensetracker.Activity.AboutAppActivity;
 import com.expense.expensetracker.Adapter.ExpenseAdapter;
 import com.expense.expensetracker.Models.Expense;
 import com.expense.expensetracker.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,6 +45,7 @@ public class ExpenseFragment extends Fragment {
     private double totalCardAmount = 0.0;
     private double totalUPIAmount = 0.0;
     private TextView dateRangePicker;
+    private ImageView infoButton;
 
     private long dateRangeStartTimestamp = 0;
 
@@ -58,6 +63,20 @@ public class ExpenseFragment extends Fragment {
         smsListView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new ExpenseAdapter(requireContext(), smsList);
         smsListView.setAdapter(adapter);
+
+        // Info Dialog Box
+        infoButton = view.findViewById(R.id.info_button);
+        infoButton.setOnClickListener(view1 -> {
+            new MaterialAlertDialogBuilder(getContext())
+                    .setView(R.layout.item_info)
+                    .setPositiveButton("Learn More", (dialog, which) -> {
+                        startActivity(new Intent(getContext(), AboutAppActivity.class));
+                    })
+                    .setNegativeButton("Ok", (dialog, which) -> {
+
+                    })
+                    .show();
+        });
 
 
         dateRangePicker = view.findViewById(R.id.date_range_expense);
@@ -105,13 +124,27 @@ public class ExpenseFragment extends Fragment {
                     if (isChecked) {
                         // Perform actions based on the selected date range
                         switch (range) {
-                            case "Today": dateRangeStartTimestamp = getStartOfToday(); break;
-                            case "Last 7 Days": dateRangeStartTimestamp = getStartOfLast7Days(); break;
-                            case "Last 30 Days": dateRangeStartTimestamp = getStartOfLast30Days(); break;
-                            case "Last 90 Days": dateRangeStartTimestamp = getStartOfLast90Days(); break;
-                            case "Last 180 Days": dateRangeStartTimestamp = getStartOfLast180Days(); break;
-                            case "Last 365 Days": dateRangeStartTimestamp = getStartOfLast365Days(); break;
-                            case "All Time": dateRangeStartTimestamp = 0; break;
+                            case "Today":
+                                dateRangeStartTimestamp = getStartOfToday();
+                                break;
+                            case "Last 7 Days":
+                                dateRangeStartTimestamp = getStartOfLast7Days();
+                                break;
+                            case "Last 30 Days":
+                                dateRangeStartTimestamp = getStartOfLast30Days();
+                                break;
+                            case "Last 90 Days":
+                                dateRangeStartTimestamp = getStartOfLast90Days();
+                                break;
+                            case "Last 180 Days":
+                                dateRangeStartTimestamp = getStartOfLast180Days();
+                                break;
+                            case "Last 365 Days":
+                                dateRangeStartTimestamp = getStartOfLast365Days();
+                                break;
+                            case "All Time":
+                                dateRangeStartTimestamp = 0;
+                                break;
                         }
                         fetchSmsData(); // Re-fetch data with the updated range
                         bottomSheetDialog.dismiss(); // Close the bottom sheet after selection
@@ -124,7 +157,6 @@ public class ExpenseFragment extends Fragment {
         // Show the Bottom Sheet Dialog
         bottomSheetDialog.show();
     }
-
 
     private long getStartOfToday() {
         Calendar calendar = Calendar.getInstance();
@@ -218,14 +250,14 @@ public class ExpenseFragment extends Fragment {
                     String address = cursor.getString(cursor.getColumnIndexOrThrow("address"));
                     long date = cursor.getLong(cursor.getColumnIndexOrThrow("date"));
                     // Filter based on transactional keywords
-                    if (isTransactionMessage(address)) {
+                    if (isTransactionMessage(body)) {
                         double amount = extractAmountFromSms(body);
 
                         if (amount > 0 && amount <= 99999) {
                             Expense expense = new Expense(address, body, amount, date);
-                            if (address.contains("SBICRD")) {
+                            if (address.contains("CRD") || address.contains("CARD") || address.contains("card")) {
                                 totalCardAmount += amount;
-                            } else if (address.contains("SBIUPI")) {
+                            } else if (body.contains("UPI") || body.contains("transfer")) {
                                 totalUPIAmount += amount;
                             }
                             smsList.add(expense);
@@ -247,9 +279,15 @@ public class ExpenseFragment extends Fragment {
         }
     }
 
-    private boolean isTransactionMessage(String smsAddress) {
-        String lowerCaseAddress = smsAddress.toLowerCase();
-        return lowerCaseAddress.contains("sbiupi") || lowerCaseAddress.contains("sbicrd") || lowerCaseAddress.contains("juspay");
+    // Helper function to check if an SMS is a transaction message
+    private boolean isTransactionMessage(String body) {
+        String[] transactionKeywords = {"debited", "credited", "withdrawn", "spent", "purchase", "transaction", "transfer"};
+        for (String keyword : transactionKeywords) {
+            if (body.toLowerCase().contains(keyword)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // Extract Amount from the Message Body

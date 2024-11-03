@@ -34,10 +34,10 @@
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
-
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/about_this_app"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -50,7 +50,7 @@
                 android:src="@drawable/app_24" />
 
             <TextView
-                android:id="@+id/about_this_app"
+
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -67,10 +67,10 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.8dp"
-            android:background="#ced4da" />
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0.8dp"-->
+<!--            android:background="#ced4da" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -93,20 +93,20 @@
                 android:text="Theme Change"
                 android:textColor="@color/textColor" />
 
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/change_theme_button"
+            <TextView
+                android:id="@+id/theme_change_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Light"
                 android:layout_gravity="center"
-                android:layout_margin="20dp" />
+                android:layout_margin="20dp"/>
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.8dp"
-            android:background="#ced4da" />
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0.8dp"-->
+<!--            android:background="#ced4da" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -138,10 +138,10 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.8dp"
-            android:background="#ced4da" />
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0.8dp"-->
+<!--            android:background="#ced4da" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -161,10 +161,10 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="Contact Us"
-
                 android:textColor="@color/textColor" />
 
             <ImageView
+                android:id="@+id/email_contact_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -173,10 +173,10 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.8dp"
-            android:background="#ced4da" />
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0.8dp"-->
+<!--            android:background="#ced4da" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -208,12 +208,13 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.8dp"
-            android:background="#ced4da" />
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0.8dp"-->
+<!--            android:background="#ced4da" />-->
 
         <LinearLayout
+            android:id="@+id/rate_this_app"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -232,7 +233,6 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="Rate this App"
-
                 android:textColor="@color/textColor" />
 
             <ImageView
@@ -401,7 +401,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.8dp"
                 android:background="#ced4da" />
-
 
         </LinearLayout>
 
