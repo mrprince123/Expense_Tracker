@@ -29,6 +29,7 @@ import com.expense.expensetracker.Database.TranscationDB;
 import com.expense.expensetracker.Models.Transaction;
 import com.expense.expensetracker.R;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -293,6 +294,13 @@ public class HomeFragment extends Fragment {
         pieChart.setCenterText("Categories");
         pieChart.setCenterTextSize(15f);
         pieChart.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
+
+        // Customize legend appearance
+        Legend legend = pieChart.getLegend();
+        legend.setTextColor(Color.WHITE); // Set legend text color to white
+        legend.setTextSize(12f);
+        legend.setWordWrapEnabled(true);
+
         pieChart.invalidate(); // Refresh the chart
     }
 

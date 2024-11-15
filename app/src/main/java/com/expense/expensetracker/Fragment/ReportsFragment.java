@@ -19,6 +19,7 @@ import com.expense.expensetracker.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -30,9 +31,9 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -146,6 +147,13 @@ public class ReportsFragment extends Fragment {
         pieChart.setCenterText("Categories");
         pieChart.setCenterTextSize(15f);
         pieChart.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
+
+        // Customize legend appearance
+        Legend legend = pieChart.getLegend();
+        legend.setTextColor(Color.WHITE); // Set legend text color to white
+        legend.setTextSize(12f);
+        legend.setWordWrapEnabled(true);
+
         pieChart.invalidate(); // Refresh the chart
     }
 
@@ -220,6 +228,12 @@ public class ReportsFragment extends Fragment {
         amountBarChart.getLegend().setEnabled(true); // Show legend
         amountBarChart.getLegend().setTextSize(12f); // Customize legend text size
 
+        // Customize legend appearance
+        Legend legend = amountBarChart.getLegend();
+        legend.setTextColor(Color.WHITE); // Set legend text color to white
+        legend.setTextSize(12f);
+        legend.setWordWrapEnabled(true);
+
         amountBarChart.invalidate();
     }
 
@@ -269,6 +283,14 @@ public class ReportsFragment extends Fragment {
         paymentMethodChart.setCenterText("Payment Methods");
         paymentMethodChart.setCenterTextSize(15f);
         paymentMethodChart.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
+
+
+        // Customize legend appearance
+        Legend legend = paymentMethodChart.getLegend();
+        legend.setTextColor(Color.WHITE); // Set legend text color to white
+        legend.setTextSize(12f);
+        legend.setWordWrapEnabled(true);
+
         paymentMethodChart.invalidate();
     }
 
@@ -328,6 +350,13 @@ public class ReportsFragment extends Fragment {
         locationChart.getDescription().setEnabled(false);
         locationChart.getLegend().setEnabled(true);
         locationChart.getLegend().setTextSize(12f);
+
+
+        // Customize legend appearance
+        Legend legend = locationChart.getLegend();
+        legend.setTextColor(Color.WHITE); // Set legend text color to white
+        legend.setTextSize(12f);
+        legend.setWordWrapEnabled(true);
 
         // Refresh the chart
         locationChart.invalidate();
