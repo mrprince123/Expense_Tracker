@@ -1,6 +1,5 @@
 package com.expense.expensetracker.Fragment;
 
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.expense.expensetracker.Database.TranscationDB;
@@ -142,7 +142,7 @@ public class ReportsFragment extends Fragment {
         PieData pieData = new PieData(dataSet);
         pieData.setValueTextSize(12f);
         pieData.setValueTypeface(Typeface.DEFAULT_BOLD);
-        pieData.setValueTextColor(Color.WHITE);
+        pieData.setValueTextColor(ContextCompat.getColor(getContext(), R.color.textColor));
         pieChart.setData(pieData);
         pieChart.setCenterText("Categories");
         pieChart.setCenterTextSize(15f);
@@ -150,8 +150,10 @@ public class ReportsFragment extends Fragment {
 
         // Customize legend appearance
         Legend legend = pieChart.getLegend();
-        legend.setTextColor(Color.WHITE); // Set legend text color to white
+        legend.setYOffset(10f);
+        legend.setTextColor(ContextCompat.getColor(getContext(), R.color.textColor));  // Set legend text color to white
         legend.setTextSize(12f);
+        legend.setFormToTextSpace(10f);
         legend.setWordWrapEnabled(true);
 
         pieChart.invalidate(); // Refresh the chart
@@ -230,7 +232,8 @@ public class ReportsFragment extends Fragment {
 
         // Customize legend appearance
         Legend legend = amountBarChart.getLegend();
-        legend.setTextColor(Color.WHITE); // Set legend text color to white
+        legend.setYOffset(10f);
+        legend.setTextColor(ContextCompat.getColor(getContext(), R.color.textColor));  // Set legend text color to white
         legend.setTextSize(12f);
         legend.setWordWrapEnabled(true);
 
@@ -278,7 +281,7 @@ public class ReportsFragment extends Fragment {
         // Set the data to the chart
         pieData.setValueTextSize(12f);
         pieData.setValueTypeface(Typeface.DEFAULT_BOLD);
-        pieData.setValueTextColor(Color.WHITE);
+        pieData.setValueTextColor(ContextCompat.getColor(getContext(), R.color.textColor));
         paymentMethodChart.setData(pieData);
         paymentMethodChart.setCenterText("Payment Methods");
         paymentMethodChart.setCenterTextSize(15f);
@@ -287,8 +290,10 @@ public class ReportsFragment extends Fragment {
 
         // Customize legend appearance
         Legend legend = paymentMethodChart.getLegend();
-        legend.setTextColor(Color.WHITE); // Set legend text color to white
+        legend.setYOffset(10f);
+        legend.setTextColor(ContextCompat.getColor(getContext(), R.color.textColor)); // Set legend text color to white
         legend.setTextSize(12f);
+        legend.setFormToTextSpace(10f);
         legend.setWordWrapEnabled(true);
 
         paymentMethodChart.invalidate();
@@ -354,8 +359,10 @@ public class ReportsFragment extends Fragment {
 
         // Customize legend appearance
         Legend legend = locationChart.getLegend();
-        legend.setTextColor(Color.WHITE); // Set legend text color to white
+        legend.setYOffset(10f);
+        legend.setTextColor(ContextCompat.getColor(getContext(), R.color.textColor));  // Set legend text color to white
         legend.setTextSize(12f);
+        legend.setFormToTextSpace(10f);
         legend.setWordWrapEnabled(true);
 
         // Refresh the chart

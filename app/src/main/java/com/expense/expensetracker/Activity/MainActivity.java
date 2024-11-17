@@ -1,5 +1,6 @@
 package com.expense.expensetracker.Activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.expense.expensetracker.R;
@@ -8,6 +9,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -35,6 +37,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
         getSupportActionBar().hide();
+
+        SharedPreferences preferences = getSharedPreferences("theme", MODE_PRIVATE);
+        // Apply theme based on saved preference
+        boolean isDarkModeOn = preferences.getBoolean("isDarkModeOn", false);
+        if (isDarkModeOn) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(

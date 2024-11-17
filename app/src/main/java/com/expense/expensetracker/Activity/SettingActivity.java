@@ -19,12 +19,13 @@ import androidx.core.view.WindowInsetsCompat;
 import com.expense.expensetracker.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import org.w3c.dom.Text;
+
 public class SettingActivity extends AppCompatActivity {
 
     ImageView backButton;
-    LinearLayout aboutthisApp;
+    LinearLayout aboutThisApp, changeTheme;
     TextView themeChangeText;
-    ImageView emailContact;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
@@ -41,12 +42,12 @@ public class SettingActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        themeChangeText = findViewById(R.id.theme_change_text);
+        themeChangeText = findViewById(R.id.theme_text);
+        changeTheme = findViewById(R.id.change_theme);
 
         sharedPreferences = getSharedPreferences("theme", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         boolean isDarkModeOn = sharedPreferences.getBoolean("isDarkModeOn", false);
-
 
         if (isDarkModeOn) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -57,19 +58,19 @@ public class SettingActivity extends AppCompatActivity {
         }
 
         // Back Button
-        backButton = findViewById(R.id.back_button_setting);
+        backButton = findViewById(R.id.setting_back_button);
         backButton.setOnClickListener(view -> {
             finish();
         });
 
         // About App
-        aboutthisApp = findViewById(R.id.about_this_app);
-        aboutthisApp.setOnClickListener(view -> {
+        aboutThisApp = findViewById(R.id.about_us_button);
+        aboutThisApp.setOnClickListener(view -> {
             startActivity(new Intent(this, AboutAppActivity.class));
         });
 
         // Rate this App
-        LinearLayout linearLayout = findViewById(R.id.rate_this_app);
+        LinearLayout linearLayout = findViewById(R.id.rate_us_button);
         linearLayout.setOnClickListener(view -> {
             String link = "https://play.google.com/store/apps/details?id=com.expense.expensetracker";
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
@@ -78,7 +79,7 @@ public class SettingActivity extends AppCompatActivity {
 
 
         // for Contact Email
-        emailContact = findViewById(R.id.email_contact_button);
+      LinearLayout  emailContact = findViewById(R.id.contact_us_button);
         emailContact.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_SENDTO);
             intent.setData(Uri.parse("mailto:princekrdss2018@gmail.com"));
@@ -89,7 +90,7 @@ public class SettingActivity extends AppCompatActivity {
         });
 
         // Show the Theme Change
-        themeChangeText.setOnClickListener(view -> {
+        changeTheme.setOnClickListener(view -> {
             themeChange();
         });
 
