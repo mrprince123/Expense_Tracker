@@ -1,5 +1,6 @@
 package com.expense.expensetracker.Fragment;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -62,7 +63,7 @@ public class ReportsFragment extends Fragment {
             setupDateDropdown();
         });
 
-//         Generate the report based on the default selection
+        // Generate the report based on the default selection
         generateReports("Last 7 Days");
 
         return view;
@@ -98,7 +99,6 @@ public class ReportsFragment extends Fragment {
         bottomSheetDialog.show();
     }
 
-
     private void generateReports(String dateRange) {
         generateReportByCategory(dateRange);
         generateReportByAmount(dateRange);
@@ -129,10 +129,28 @@ public class ReportsFragment extends Fragment {
 
         // Generate unique colors for each category
         ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(ContextCompat.getColor(getContext(), R.color.food));
+        colors.add(ContextCompat.getColor(getContext(), R.color.electronics));
+        colors.add(ContextCompat.getColor(getContext(), R.color.travel));
+        colors.add(ContextCompat.getColor(getContext(), R.color.clothes));
+        colors.add(ContextCompat.getColor(getContext(), R.color.house));
+        colors.add(ContextCompat.getColor(getContext(), R.color.education));
+        colors.add(ContextCompat.getColor(getContext(), R.color.rent));
+        colors.add(ContextCompat.getColor(getContext(), R.color.vehicle));
+        colors.add(ContextCompat.getColor(getContext(), R.color.electricity));
+        colors.add(ContextCompat.getColor(getContext(), R.color.sports));
+        colors.add(ContextCompat.getColor(getContext(), R.color.gas));
+        colors.add(ContextCompat.getColor(getContext(), R.color.subscription));
+        colors.add(ContextCompat.getColor(getContext(), R.color.pay));
+        colors.add(ContextCompat.getColor(getContext(), R.color.others));
+
+        // Ensure we match the number of entries
+        ArrayList<Integer> finalColors = new ArrayList<>();
         for (int i = 0; i < entries.size(); i++) {
-            colors.add(ColorTemplate.COLORFUL_COLORS[i % ColorTemplate.COLORFUL_COLORS.length]);
+            finalColors.add(colors.get(i % colors.size()));
         }
-        dataSet.setColors(colors);
+
+        dataSet.setColors(finalColors);
         dataSet.setSliceSpace(4f);
 
         pieChart.setDrawEntryLabels(false);
@@ -140,13 +158,12 @@ public class ReportsFragment extends Fragment {
         pieChart.getDescription().setEnabled(false);
 
         PieData pieData = new PieData(dataSet);
-        pieData.setValueTextSize(12f);
+        pieData.setValueTextSize(10f);
         pieData.setValueTypeface(Typeface.DEFAULT_BOLD);
-        pieData.setValueTextColor(ContextCompat.getColor(getContext(), R.color.textColor));
+        pieData.setValueTextColor(Color.WHITE);
         pieChart.setData(pieData);
         pieChart.setCenterText("Categories");
-        pieChart.setCenterTextSize(15f);
-        pieChart.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
+        pieChart.setCenterTextSize(12f);
 
         // Customize legend appearance
         Legend legend = pieChart.getLegend();
@@ -190,7 +207,30 @@ public class ReportsFragment extends Fragment {
 
         // Create a BarDataSet and assign unique colors
         BarDataSet dataSet = new BarDataSet(entries, "Amounts by Date");
-        dataSet.setColors(ColorTemplate.COLORFUL_COLORS); // Set colors
+        // Generate unique colors for each category
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(ContextCompat.getColor(getContext(), R.color.food));
+        colors.add(ContextCompat.getColor(getContext(), R.color.electronics));
+        colors.add(ContextCompat.getColor(getContext(), R.color.travel));
+        colors.add(ContextCompat.getColor(getContext(), R.color.clothes));
+        colors.add(ContextCompat.getColor(getContext(), R.color.house));
+        colors.add(ContextCompat.getColor(getContext(), R.color.education));
+        colors.add(ContextCompat.getColor(getContext(), R.color.rent));
+        colors.add(ContextCompat.getColor(getContext(), R.color.vehicle));
+        colors.add(ContextCompat.getColor(getContext(), R.color.electricity));
+        colors.add(ContextCompat.getColor(getContext(), R.color.sports));
+        colors.add(ContextCompat.getColor(getContext(), R.color.gas));
+        colors.add(ContextCompat.getColor(getContext(), R.color.subscription));
+        colors.add(ContextCompat.getColor(getContext(), R.color.pay));
+        colors.add(ContextCompat.getColor(getContext(), R.color.others));
+
+        // Ensure we match the number of entries
+        ArrayList<Integer> finalColors = new ArrayList<>();
+        for (int i = 0; i < entries.size(); i++) {
+            finalColors.add(colors.get(i % colors.size()));
+        }
+
+        dataSet.setColors(finalColors);
 
         // Create BarData with the dataset
         BarData barData = new BarData(dataSet);
@@ -264,12 +304,30 @@ public class ReportsFragment extends Fragment {
         // Create a PieDataSet and assign unique colors
         PieDataSet dataSet = new PieDataSet(entries, "Payment Methods");
 
-        // Generate unique colors for each payment method
+        // Generate unique colors for each category
         ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(ContextCompat.getColor(getContext(), R.color.food));
+        colors.add(ContextCompat.getColor(getContext(), R.color.electronics));
+        colors.add(ContextCompat.getColor(getContext(), R.color.travel));
+        colors.add(ContextCompat.getColor(getContext(), R.color.clothes));
+        colors.add(ContextCompat.getColor(getContext(), R.color.house));
+        colors.add(ContextCompat.getColor(getContext(), R.color.education));
+        colors.add(ContextCompat.getColor(getContext(), R.color.rent));
+        colors.add(ContextCompat.getColor(getContext(), R.color.vehicle));
+        colors.add(ContextCompat.getColor(getContext(), R.color.electricity));
+        colors.add(ContextCompat.getColor(getContext(), R.color.sports));
+        colors.add(ContextCompat.getColor(getContext(), R.color.gas));
+        colors.add(ContextCompat.getColor(getContext(), R.color.subscription));
+        colors.add(ContextCompat.getColor(getContext(), R.color.pay));
+        colors.add(ContextCompat.getColor(getContext(), R.color.others));
+
+        // Ensure we match the number of entries
+        ArrayList<Integer> finalColors = new ArrayList<>();
         for (int i = 0; i < entries.size(); i++) {
-            colors.add(ColorTemplate.COLORFUL_COLORS[i % ColorTemplate.COLORFUL_COLORS.length]);
+            finalColors.add(colors.get(i % colors.size()));
         }
-        dataSet.setColors(colors);
+
+        dataSet.setColors(finalColors);
         dataSet.setSliceSpace(5f);
 
         PieData pieData = new PieData(dataSet);
@@ -279,13 +337,13 @@ public class ReportsFragment extends Fragment {
         paymentMethodChart.getDescription().setEnabled(false);
 
         // Set the data to the chart
-        pieData.setValueTextSize(12f);
+        pieData.setValueTextSize(10f);
         pieData.setValueTypeface(Typeface.DEFAULT_BOLD);
-        pieData.setValueTextColor(ContextCompat.getColor(getContext(), R.color.textColor));
+        pieData.setValueTextColor(Color.WHITE);
         paymentMethodChart.setData(pieData);
         paymentMethodChart.setCenterText("Payment Methods");
-        paymentMethodChart.setCenterTextSize(15f);
-        paymentMethodChart.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
+        paymentMethodChart.setCenterTextSize(12f);
+//        paymentMethodChart.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
 
 
         // Customize legend appearance
@@ -321,7 +379,32 @@ public class ReportsFragment extends Fragment {
         }
 
         BarDataSet dataSet = new BarDataSet(entries, "Transactions by Location");
-        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+
+
+        // Generate unique colors for each category
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(ContextCompat.getColor(getContext(), R.color.food));
+        colors.add(ContextCompat.getColor(getContext(), R.color.electronics));
+        colors.add(ContextCompat.getColor(getContext(), R.color.travel));
+        colors.add(ContextCompat.getColor(getContext(), R.color.clothes));
+        colors.add(ContextCompat.getColor(getContext(), R.color.house));
+        colors.add(ContextCompat.getColor(getContext(), R.color.education));
+        colors.add(ContextCompat.getColor(getContext(), R.color.rent));
+        colors.add(ContextCompat.getColor(getContext(), R.color.vehicle));
+        colors.add(ContextCompat.getColor(getContext(), R.color.electricity));
+        colors.add(ContextCompat.getColor(getContext(), R.color.sports));
+        colors.add(ContextCompat.getColor(getContext(), R.color.gas));
+        colors.add(ContextCompat.getColor(getContext(), R.color.subscription));
+        colors.add(ContextCompat.getColor(getContext(), R.color.pay));
+        colors.add(ContextCompat.getColor(getContext(), R.color.others));
+
+        // Ensure we match the number of entries
+        ArrayList<Integer> finalColors = new ArrayList<>();
+        for (int i = 0; i < entries.size(); i++) {
+            finalColors.add(colors.get(i % colors.size()));
+        }
+
+        dataSet.setColors(finalColors);
 
         // Create BarData with the dataset
         BarData barData = new BarData(dataSet);
@@ -348,14 +431,12 @@ public class ReportsFragment extends Fragment {
         xAxis.setGranularity(1f);
         xAxis.setDrawGridLines(false);
 
-
         // Customize the Y-axis
         locationChart.getAxisLeft().setDrawGridLines(false);
         locationChart.getAxisRight().setEnabled(false);
         locationChart.getDescription().setEnabled(false);
         locationChart.getLegend().setEnabled(true);
         locationChart.getLegend().setTextSize(12f);
-
 
         // Customize legend appearance
         Legend legend = locationChart.getLegend();

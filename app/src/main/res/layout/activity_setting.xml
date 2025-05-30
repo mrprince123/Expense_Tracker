@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/backgroundColor"
+    android:orientation="vertical"
     tools:context=".Activity.SettingActivity">
 
     <LinearLayout
@@ -19,17 +18,17 @@
             android:id="@+id/setting_back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="15dp"
             android:layout_gravity="center"
-            android:src="@drawable/back_24"/>
+            android:padding="15dp"
+            android:src="@drawable/back_24" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Settings"
-            android:textSize="20sp"
             android:layout_gravity="center"
-            android:textColor="@color/textColor" />
+            android:text="Settings"
+            android:textColor="@color/textColor"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -43,8 +42,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textColor="@color/textColor"
-            android:text="General settings"/>
+            android:text="General settings"
+            android:textColor="@color/textColor" />
 
         <LinearLayout
             android:id="@+id/change_theme"
@@ -58,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="15dp"
-                android:src="@drawable/theme_24"/>
+                android:src="@drawable/theme_24" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -69,16 +68,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/textColor"
                     android:text="Theme"
-                    android:textSize="18sp"/>
+                    android:textColor="@color/textColor"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/theme_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/grayText"
-                    android:text="Light"/>
+                    android:text="Light"
+                    android:textColor="@color/grayText" />
 
             </LinearLayout>
 
@@ -96,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="15dp"
-                android:src="@drawable/app_24"/>
+                android:src="@drawable/app_24" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -107,16 +106,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/textColor"
                     android:text="About"
-                    android:textSize="18sp"/>
+                    android:textColor="@color/textColor"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/about_this_app"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/grayText"
-                    android:text="About this application"/>
+                    android:text="About this application"
+                    android:textColor="@color/grayText" />
 
             </LinearLayout>
 
@@ -136,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="15dp"
-                android:src="@drawable/share_24"/>
+                android:src="@drawable/share_24" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -149,13 +148,13 @@
                     android:layout_height="wrap_content"
                     android:text="Share"
                     android:textColor="@color/textColor"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/grayText"
-                    android:text="Share this app with your friends"/>
+                    android:text="Share this app with your friends"
+                    android:textColor="@color/grayText" />
 
             </LinearLayout>
 
@@ -174,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="15dp"
-                android:src="@drawable/contact_24"/>
+                android:src="@drawable/contact_24" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -187,13 +186,13 @@
                     android:layout_height="wrap_content"
                     android:text="Contact us"
                     android:textColor="@color/textColor"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/grayText"
-                    android:text="princekrdss2018@gmail.com"/>
+                    android:text="princekrdss2018@gmail.com"
+                    android:textColor="@color/grayText" />
 
             </LinearLayout>
 
@@ -212,7 +211,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="15dp"
-                android:src="@drawable/rate_24"/>
+                android:src="@drawable/rate_24" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -225,13 +224,13 @@
                     android:layout_height="wrap_content"
                     android:text="Rate us"
                     android:textColor="@color/textColor"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/grayText"
-                    android:text="Rate us on play store"/>
+                    android:text="Rate us on play store"
+                    android:textColor="@color/grayText" />
 
             </LinearLayout>
 
@@ -250,7 +249,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="15dp"
-                android:src="@drawable/privacy_24"/>
+                android:src="@drawable/privacy_24" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -263,13 +262,13 @@
                     android:layout_height="wrap_content"
                     android:text="Privacy Policy"
                     android:textColor="@color/textColor"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/grayText"
-                    android:text="Read privacy policy of this application"/>
+                    android:text="Read privacy policy of this application"
+                    android:textColor="@color/grayText" />
 
             </LinearLayout>
 
@@ -288,8 +287,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textColor="@color/textColor"
-            android:text="App settings"/>
+            android:text="App settings"
+            android:textColor="@color/textColor" />
 
         <LinearLayout
             android:id="@+id/clear_cache"
@@ -303,7 +302,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="15dp"
-                android:src="@drawable/cached_24"/>
+                android:src="@drawable/cached_24" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -316,13 +315,13 @@
                     android:layout_height="wrap_content"
                     android:text="Clear Cache"
                     android:textColor="@color/textColor"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/grayText"
-                    android:text="Clear cache of this app"/>
+                    android:text="Clear cache of this app"
+                    android:textColor="@color/grayText" />
 
             </LinearLayout>
 
@@ -340,7 +339,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="15dp"
-                android:src="@drawable/storage_24"/>
+                android:src="@drawable/storage_24" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -353,13 +352,13 @@
                     android:layout_height="wrap_content"
                     android:text="Clear Data"
                     android:textColor="@color/textColor"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/grayText"
-                    android:text="Clear all data of this application"/>
+                    android:text="Clear all data of this application"
+                    android:textColor="@color/grayText" />
 
             </LinearLayout>
 

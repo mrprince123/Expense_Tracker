@@ -3,10 +3,6 @@ package com.expense.expensetracker.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.expense.expensetracker.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -18,7 +14,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.expense.expensetracker.R;
 import com.expense.expensetracker.databinding.ActivityMainBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,5 +1,6 @@
 package com.expense.expensetracker.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -8,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +21,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.expense.expensetracker.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-import org.w3c.dom.Text;
+import java.io.File;
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -28,6 +30,7 @@ public class SettingActivity extends AppCompatActivity {
     TextView themeChangeText;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    LinearLayout clearCache, clearData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +80,8 @@ public class SettingActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-
         // for Contact Email
-      LinearLayout  emailContact = findViewById(R.id.contact_us_button);
+        LinearLayout emailContact = findViewById(R.id.contact_us_button);
         emailContact.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_SENDTO);
             intent.setData(Uri.parse("mailto:princekrdss2018@gmail.com"));
@@ -89,11 +91,63 @@ public class SettingActivity extends AppCompatActivity {
 
         });
 
+        // Clear App Cache
+        clearCache = findViewById(R.id.clear_cache);
+        clearCache.setOnClickListener(view -> {
+            clearCache(getApplicationContext());
+            Toast.makeText(getApplicationContext(), "App Cache cleared", Toast.LENGTH_SHORT).show();
+        });
+
+
+        // Clear App Data
+        clearData = findViewById(R.id.clear_data);
+        clearData.setOnClickListener(view -> {
+            clearAppData();
+            Toast.makeText(getApplicationContext(), "App Data cleared", Toast.LENGTH_SHORT).show();
+        });
+
         // Show the Theme Change
         changeTheme.setOnClickListener(view -> {
             themeChange();
         });
 
+    }
+
+    public void clearCache(Context context) {
+        try {
+            File cacheDir = context.getCacheDir();
+            if (cacheDir != null && cacheDir.isDirectory()) {
+                deleteDir(cacheDir);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (String child : children) {
+                boolean success = deleteDir(new File(dir, child));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else if (dir != null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
+    }
+
+    public void clearAppData() {
+        try {
+            // This clears all the app's data and restarts it.
+            Runtime.getRuntime().exec("pm clear " + getPackageName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void themeChange() {

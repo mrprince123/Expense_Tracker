@@ -2,7 +2,6 @@ package com.expense.expensetracker.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +26,7 @@ import java.util.Locale;
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder> {
 
     private final Context context;
-    private  ArrayList<Transaction> transactions;
+    private ArrayList<Transaction> transactions;
 
     public TransactionAdapter(Context context, ArrayList<Transaction> transactions) {
         this.context = context;
@@ -78,7 +77,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             case "Clothes":
                 setBackgroundColor(holder.transactionImage, R.color.clothes);
                 Glide.with(context).load(R.drawable.clothes_24).into(holder.transactionImage);
-                        break;
+                break;
             case "House Hold":
                 setBackgroundColor(holder.transactionImage, R.color.house);
                 Glide.with(context).load(R.drawable.house_24).into(holder.transactionImage);
@@ -142,6 +141,26 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         return transactions.size();
     }
 
+    public void updateData(ArrayList<Transaction> newTransactions) {
+        this.transactions.clear();   // Assuming transactionList is the list used in the adapter
+        this.transactions.addAll(newTransactions);
+        notifyDataSetChanged();  // Notify the adapter of data changes
+    }
+
+    public void updateTransactionList(ArrayList<Transaction> filterList) {
+        this.transactions = filterList;
+        notifyDataSetChanged();
+    }
+
+    // Method to set background color
+    private void setBackgroundColor(ImageView imageView, int colorResId) {
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setColor(ContextCompat.getColor(imageView.getContext(), colorResId));
+        drawable.setShape(GradientDrawable.RECTANGLE);
+        drawable.setCornerRadius(10 * imageView.getContext().getResources().getDisplayMetrics().density); // Convert dp to pixels
+        imageView.setBackground(drawable);
+    }
+
     public static class TransactionViewHolder extends RecyclerView.ViewHolder {
 
         TextView title, time, description;
@@ -155,26 +174,5 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             time = itemView.findViewById(R.id.transaction_time);
             transactionImage = itemView.findViewById(R.id.transaction_image);
         }
-    }
-
-
-    public void updateData(ArrayList<Transaction> newTransactions) {
-        this.transactions.clear();   // Assuming transactionList is the list used in the adapter
-        this.transactions.addAll(newTransactions);
-        notifyDataSetChanged();  // Notify the adapter of data changes
-    }
-
-    public void updateTransactionList(ArrayList<Transaction> filterList){
-        this.transactions = filterList;
-        notifyDataSetChanged();
-    }
-
-    // Method to set background color
-    private void setBackgroundColor(ImageView imageView, int colorResId) {
-        GradientDrawable drawable = new GradientDrawable();
-        drawable.setColor(ContextCompat.getColor(imageView.getContext(), colorResId));
-        drawable.setShape(GradientDrawable.RECTANGLE);
-        drawable.setCornerRadius(10 * imageView.getContext().getResources().getDisplayMetrics().density); // Convert dp to pixels
-        imageView.setBackground(drawable);
     }
 }

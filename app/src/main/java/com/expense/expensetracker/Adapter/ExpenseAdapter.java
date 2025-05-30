@@ -6,11 +6,9 @@ import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -83,12 +81,12 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
             new MaterialAlertDialogBuilder(context)
                     .setTitle("SMS Message")
                     .setView(dialogView)
-                    .setPositiveButton("Ok", (dialog, which)->{
+                    .setPositiveButton("Ok", (dialog, which) -> {
                     })
 
-                    .setNegativeButton("Cancel", (dialog, which)->{
+                    .setNegativeButton("Cancel", (dialog, which) -> {
                         dialog.dismiss();
-            }).show();
+                    }).show();
         });
     }
 

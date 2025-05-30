@@ -1,7 +1,5 @@
 package com.expense.expensetracker.Models;
 
-import java.util.Date;
-
 public class Transaction {
 
     // Expense Title
@@ -110,7 +108,7 @@ public class Transaction {
     public void setNotes(String notes) {
         this.notes = notes;
     }
-    
+
     public String getTimestamp() {
         return timestamp;
     }

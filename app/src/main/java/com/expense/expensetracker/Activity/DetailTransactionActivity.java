@@ -1,14 +1,10 @@
 package com.expense.expensetracker.Activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +19,6 @@ import com.bumptech.glide.Glide;
 import com.expense.expensetracker.Database.TranscationDB;
 import com.expense.expensetracker.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 
 import java.text.DecimalFormat;
 
@@ -126,7 +121,6 @@ public class DetailTransactionActivity extends AppCompatActivity {
                 .setCancelable(true);
 
 
-        Log.e("IMAGE_URL", receipt);
         ImageView fullImageView = dialogView.findViewById(R.id.recipe_full_view);
 
         Glide.with(this)

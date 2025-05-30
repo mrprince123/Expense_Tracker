@@ -250,16 +250,20 @@ public class ExpenseFragment extends Fragment {
                     String address = cursor.getString(cursor.getColumnIndexOrThrow("address"));
                     long date = cursor.getLong(cursor.getColumnIndexOrThrow("date"));
                     // Filter based on transactional keywords
-                    if (isTransactionMessage(body)) {
+                    if (!isOtpMessage(address, body) && isTransactionMessage(body) && !isExcludedMessage(body)) {
                         double amount = extractAmountFromSms(body);
 
                         if (amount > 0 && amount <= 99999) {
                             Expense expense = new Expense(address, body, amount, date);
-                            if (address.contains("CRD") || address.contains("CARD") || address.contains("card")) {
-                                totalCardAmount += amount;
-                            } else if (body.contains("UPI") || body.contains("transfer")) {
-                                totalUPIAmount += amount;
+
+                            // Categorize and add to totals
+                            if (isCreditCardTransaction(body, address)) {
+                                totalCardAmount += amount; // Add to credit card total
+                            } else if (isDebitCardTransaction(body, address)) {
+                                totalUPIAmount += amount; // Add to debit/UPI total
                             }
+
+
                             smsList.add(expense);
                         }
                     }
@@ -290,6 +294,38 @@ public class ExpenseFragment extends Fragment {
         return false;
     }
 
+    // Helper function to exclude OTP messages
+    private boolean isOtpMessage(String address, String body) {
+        return (address != null && address.toLowerCase().contains("otp")) ||
+                (body != null && body.toLowerCase().contains("otp"));
+    }
+
+    // Helper function to exclude non-transactional messages
+    private boolean isExcludedMessage(String body) {
+        String[] exclusionKeywords = {"loan", "EMI", "finance", "installment", "repayment", "due"};
+        for (String keyword : exclusionKeywords) {
+            if (body.toLowerCase().contains(keyword)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Helper function to identify credit card transactions
+    private boolean isCreditCardTransaction(String body, String address) {
+        return address.toLowerCase().contains("card") || body.toLowerCase().contains("credit card");
+    }
+
+    // Helper function to identify debit card or UPI transactions
+    private boolean isDebitCardTransaction(String body, String address) {
+        return body.toLowerCase().contains("upi") ||
+                body.toLowerCase().contains("debit card") ||
+                address.toLowerCase().contains("debit") ||
+                address.toLowerCase().contains("BNK") ||
+                body.toLowerCase().contains("debited") ||
+                body.toLowerCase().contains("credited");
+    }
+
     // Extract Amount from the Message Body
     private double extractAmountFromSms(String smsBody) {
         String regex = "(?i)(?:(?:RS|INR|MRP)\\.?\\s?)(\\d+(:?\\,\\d+)?(\\,\\d+)?(\\.\\d{1,2})?)";
@@ -302,15 +338,34 @@ public class ExpenseFragment extends Fragment {
     }
 
     // Extract Merchant Name from the SMS
-    private String extractMerchantNameFromSMS() {
+    private String extractMerchantNameFromSMS(String smsBody) {
         String regex = "(?i)(?:\\sat\\s|in\\*)([A-Za-z0-9]*\\s?-?\\s?[A-Za-z0-9]*\\s?-?\\.?)";
 
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(smsBody);
+
+        // If a match is found, return the merchant name
+        if (matcher.find()) {
+            return matcher.group(1).trim();
+        }
+
+        // Return null or a default value if no match is found
         return null;
     }
 
     // Find out the card name (debit/Credit Card)from the bank transaction messages
-    private String extractCardNameFromSMS() {
+    private String extractCardNameFromSMS(String smsBody) {
         String regex = "(?i)(?:\\smade on|ur|made a\\s|in\\*)([A-Za-z]*\\s?-?\\s[A-Za-z]*\\s?-?\\s[A-Za-z]*\\s?-?)";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(smsBody);
+
+        if (matcher.find()) {
+            // Combine the matched card type and bank name, if present
+            String cardType = matcher.group(1).trim(); // Debit/Credit Card
+            String cardName = matcher.group(2) != null ? matcher.group(2).trim() : ""; // Bank name if available
+            return cardType + (cardName.isEmpty() ? "" : " - " + cardName);
+        }
 
         return null;
     }

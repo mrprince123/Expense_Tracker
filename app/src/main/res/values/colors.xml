@@ -17,20 +17,20 @@
     <color name="forgroundColor">#f2f2fe</color>
     <color name="bottomBar">#FFFBE6</color>
 
-    <!--    All the Category 14 Color -->
-    <color name="food">#fb6f92</color>
-    <color name="electronics">#1e96fc</color>
-    <color name="travel">#38b000</color>
-    <color name="clothes">#ff8500</color>
-    <color name="house">#ffd60a</color>
-    <color name="education">#fd3f26</color>
-    <color name="rent">#72ddf7</color>
-    <color name="vehicle">#c77dff</color>
-    <color name="electricity">#003566</color>
-    <color name="sports">#78290f</color>
-    <color name="gas">#55a630</color>
-    <color name="subscription">#a2328d</color>
-    <color name="pay">#415a77</color>
-    <color name="others">#3d348b</color>
+    <!-- All the Category 14 Color - 30% Lighter -->
+    <color name="food">#fc9aae</color>         <!-- original: #fb6f92 -->
+    <color name="electronics">#55b1fd</color>  <!-- original: #1e96fc -->
+    <color name="travel">#62c700</color>       <!-- original: #38b000 -->
+    <color name="clothes">#ff9f33</color>      <!-- original: #ff8500 -->
+    <color name="house">#ffe23e</color>        <!-- original: #ffd60a -->
+    <color name="education">#fd6e5c</color>    <!-- original: #fd3f26 -->
+    <color name="rent">#8fe7f9</color>         <!-- original: #72ddf7 -->
+    <color name="vehicle">#d3a6ff</color>      <!-- original: #c77dff -->
+    <color name="electricity">#336c99</color>  <!-- original: #003566 -->
+    <color name="sports">#93513c</color>       <!-- original: #78290f -->
+    <color name="gas">#76bb5a</color>          <!-- original: #55a630 -->
+    <color name="subscription">#b95da9</color> <!-- original: #a2328d -->
+    <color name="pay">#5a6e8a</color>          <!-- original: #415a77 -->
+    <color name="others">#5e5aa4</color>       <!-- original: #3d348b -->
 
 </resources>

@@ -96,6 +96,9 @@ public class TranscationDB extends SQLiteOpenHelper {
         return id;
     }
 
+
+
+
     public ArrayList<Transaction> getAllTransactions() {
         ArrayList<Transaction> transactions = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -125,14 +128,13 @@ public class TranscationDB extends SQLiteOpenHelper {
     }
 
 
-
-    public ArrayList<Transaction> getLatestTransactions(){
+    public ArrayList<Transaction> getLatestTransactions() {
         ArrayList<Transaction> transactions = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT * FROM " + TABLE_TRANSACTION +  " ORDER BY " + COLUMN_TIMESTAMP + " DESC LIMIT 10";
+        String selectQuery = "SELECT * FROM " + TABLE_TRANSACTION + " ORDER BY " + COLUMN_TIMESTAMP + " DESC LIMIT 10";
 
-        Cursor cursor  = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -181,19 +183,6 @@ public class TranscationDB extends SQLiteOpenHelper {
         return totalAmount; // Return the total amount
     }
 
-    public void setIncomeBalance(double income) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_INCOME_BALANCE, income);
-
-        // Check if there's an existing entry; if so, update it; otherwise, insert a new one
-        int rowsAffected = db.update(TABLE_INCOME, values, null, null);
-        if (rowsAffected == 0) { // No rows were updated, so insert a new entry
-            db.insert(TABLE_INCOME, null, values);
-        }
-        db.close();
-    }
-
     public double getIncomeBalance() {
         double incomeBalance = 0;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -207,5 +196,18 @@ public class TranscationDB extends SQLiteOpenHelper {
         }
         db.close(); // Close the database connection
         return incomeBalance;
+    }
+
+    public void setIncomeBalance(double income) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_INCOME_BALANCE, income);
+
+        // Check if there's an existing entry; if so, update it; otherwise, insert a new one
+        int rowsAffected = db.update(TABLE_INCOME, values, null, null);
+        if (rowsAffected == 0) { // No rows were updated, so insert a new entry
+            db.insert(TABLE_INCOME, null, values);
+        }
+        db.close();
     }
 }

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
+    android:layout_margin="15dp"
     android:orientation="vertical"
     tools:context=".Fragment.ExpenseFragment">
 
@@ -16,10 +16,10 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
             android:text="Local Expenses"
             android:textColor="@color/textColor"
             android:textSize="18dp"
@@ -27,32 +27,31 @@
 
 
         <TextView
+            android:id="@+id/date_range_expense"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/date_range_expense"
-            android:background="@drawable/round_date"
-            android:gravity="center"
-            android:backgroundTint="@color/forgroundColor"
+            android:layout_gravity="center"
             android:layout_marginRight="5dp"
+            android:background="@drawable/round_date"
+            android:backgroundTint="@color/forgroundColor"
             android:drawableEnd="@drawable/down_24"
             android:drawableTint="@color/textColor"
-            android:layout_gravity="center"
-            android:textSize="12dp"
-            android:textColor="@color/textColor"
+            android:gravity="center"
             android:padding="5dp"
-            android:text="Date Range"/>
+            android:text="Date Range"
+            android:textColor="@color/textColor"
+            android:textSize="12dp" />
 
 
         <ImageView
             android:id="@+id/info_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:layout_gravity="center"
-            android:src="@drawable/info_24"/>
+            android:layout_margin="5dp"
+            android:src="@drawable/info_24" />
 
     </LinearLayout>
-
 
 
     <LinearLayout
@@ -64,27 +63,27 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="10dp"
-            android:layout_weight="1"
             android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
             android:background="@drawable/round_white"
             android:backgroundTint="@color/forgroundColor"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:layout_gravity="center"
-                android:src="@drawable/credit_24"/>
+                android:layout_margin="5dp"
+                android:src="@drawable/credit_24" />
 
             <TextView
                 android:id="@+id/debitCardTotalAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
                 android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
                 android:text="$2000"
                 android:textColor="@color/textColor"
                 android:textSize="14dp" />
@@ -95,27 +94,27 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="10dp"
-            android:layout_weight="1"
             android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
             android:background="@drawable/round_white"
             android:backgroundTint="@color/forgroundColor"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:layout_gravity="center"
-                android:src="@drawable/wallet_24"/>
+                android:layout_margin="5dp"
+                android:src="@drawable/wallet_24" />
 
             <TextView
                 android:id="@+id/creditCardTotalAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
                 android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
                 android:text="$2000"
                 android:textColor="@color/textColor"
                 android:textSize="14dp" />
@@ -129,11 +128,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:text="From SMS"
-        android:textSize="16dp"
         android:textColor="@color/textColor"
+        android:textSize="16dp"
         android:textStyle="bold" />
 
 
